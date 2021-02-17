@@ -1,4 +1,4 @@
-const Users = require("../users/users-model")
+const users = require("../users/users-model")
 
 function logger(req, res, next) {
   // DO YOUR MAGIC
@@ -13,32 +13,33 @@ function logger(req, res, next) {
     // DO YOUR MAGIC
   return (req, res, next) => {
     users.getById(req.params.id)
-      .then ((user) => {
-        if (user) {
-          req.user = user;
-          next();
+      .then ((userId) => {
+        if (userId) {
+          req.userId = userId;
+          next()
         } else {
-          res.status(404).json({message: "user not found"});
+          res.status(404).json({message: "user not found"})
         }
       })
-      .catch ((error) => {
-        console.log(error);
+      .catch ((err) => {
+        console.log(err)
       })
   }
 }
-
 function validateUser() {
   // DO YOUR MAGIC
   return (req, res, next) => {
-  if(!req.body) {
-    res.status(400).json({ message: "missing user data" })
-  } else if(!req.body.name) {
-    res.status(400).json({ message: "missing required name field" })
-  } else {
+    const {user} = req.body
+    if(!user) {
+        return res.status(404).json({
+            errorMessage: "Please provide user data",
+       })
+    }
+    req.user = user
     next()
   }
 }
-}
+
 
 function validatePost() {
   // DO YOUR MAGIC HERE 
