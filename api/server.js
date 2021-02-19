@@ -10,7 +10,9 @@ server.use(logger)
 server.use(express.json())
 // global middlewares and routes need to be connected here
 server.use(usersRouter)
-
+server.get("/",(req, res) =>{
+res.send({message: "Hello Wold"})
+})
 
 server.use((err, req, res, next) => {
   console.log(err) 
