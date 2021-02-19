@@ -9,7 +9,7 @@ const server = express()
 server.use(logger)
 server.use(express.json())
 // global middlewares and routes need to be connected here
-server.use(usersRouter)
+server.use("/users",usersRouter)
 server.get("/",(req, res) =>{
 res.send({message: "Hello Wold"})
 })
